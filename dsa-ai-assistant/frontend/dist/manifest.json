@@ -1,0 +1,42 @@
+{
+  "manifest_version": 3,
+  "name": "DSA AI Assistant",
+  "version": "1.0.0",
+  "description": "Get AI-powered hints for DSA problems on LeetCode and other platforms",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://leetcode.com/*",
+    "https://geeksforgeeks.org/*",
+    "http://localhost:3000/*"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "DSA AI Assistant"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/content.js-DDIIySIe.js"
+      ],
+      "matches": [
+        "https://leetcode.com/*",
+        "https://geeksforgeeks.org/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://geeksforgeeks.org/*",
+        "https://leetcode.com/*"
+      ],
+      "resources": [
+        "assets/content.js-DDIIySIe.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ]
+}
