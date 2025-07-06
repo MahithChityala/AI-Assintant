@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import axios from 'axios'
 import './popup.css'
 
 function Popup() {
@@ -37,8 +38,21 @@ function Popup() {
       console.log('Response from content script:', response);
       
       if (response && response.problemData) {
-        // For now, just display the extracted data
-        setHint(`Problem Title: ${response.problemData.title}\n\nProblem Description: ${response.problemData.description}`)
+        console.log('Sending problem data to backend...');
+        // Send problem data to backend for AI hint generation
+        const backendResponse = await axios.post('http://localhost:3000/api/gemini', {
+          title: response.problemData.title,
+          description: response.problemData.description,
+          platform: response.problemData.platform
+        });
+        
+        console.log('Backend response:', backendResponse.data);
+        
+        if (backendResponse.data.success && backendResponse.data.hint) {
+          setHint(backendResponse.data.hint);
+        } else {
+          setError('Failed to generate hint from backend.');
+        }
       } else {
         setError('Could not extract problem data from this page. Make sure you are on a LeetCode or GeeksForGeeks problem page.')
       }
@@ -46,6 +60,8 @@ function Popup() {
       console.error('Error in getHint:', err);
       if (err.message.includes('Receiving end does not exist')) {
         setError('Content script not found. Please refresh the page and try again.')
+      } else if (err.code === 'ECONNREFUSED') {
+        setError('Backend server is not running. Please start the backend server on port 3000.')
       } else {
         setError('Error: ' + err.message)
       }
@@ -57,14 +73,14 @@ function Popup() {
   return (
     <div className="popup-container">
       <h1>DSA AI Assistant</h1>
-      <p>Get hints for your current DSA problem</p>
+      <p>Get AI-powered hints for your current DSA problem</p>
       
       <button 
         onClick={getHint} 
         disabled={loading}
         className="hint-button"
       >
-        {loading ? 'Getting Hint...' : 'Get Hint'}
+        {loading ? 'Generating Hint...' : 'Get AI Hint'}
       </button>
 
       {error && (
@@ -75,8 +91,8 @@ function Popup() {
 
       {hint && (
         <div className="hint-container">
-          <h3>Problem Information:</h3>
-          <pre>{hint}</pre>
+          <h3>AI-Generated Hint:</h3>
+          <div className="hint-content">{hint}</div>
         </div>
       )}
     </div>
