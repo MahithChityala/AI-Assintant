@@ -9,24 +9,24 @@
     "file": "assets/main-3wxBpBxb.css",
     "src": "_main-3wxBpBxb.css"
   },
-  "_main-uuE2ONIN.js": {
-    "file": "assets/main-uuE2ONIN.js",
+  "_main-E_nv1Y_T.js": {
+    "file": "assets/main-E_nv1Y_T.js",
     "name": "main",
     "css": [
       "assets/main-3wxBpBxb.css"
     ]
   },
   "index.html": {
-    "file": "assets/index.html-j64RJt4S.js",
+    "file": "assets/index.html-CgPqusQ8.js",
     "name": "index.html",
     "src": "index.html",
     "isEntry": true,
     "imports": [
-      "_main-uuE2ONIN.js"
+      "_main-E_nv1Y_T.js"
     ]
   },
   "src/content.js": {
-    "file": "assets/content.js-DDIIySIe.js",
+    "file": "assets/content.js-BGykTyPs.js",
     "name": "content.js",
     "src": "src/content.js",
     "isEntry": true
